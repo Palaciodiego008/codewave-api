@@ -8,6 +8,7 @@ import (
 
 func InitRoutes() *gin.Engine {
 	router := gin.Default()
+	controllers.HomeRoutes(router)
 	controllers.RegisterUserRoutes(router)
 
 	// auth := router.Group("/")
