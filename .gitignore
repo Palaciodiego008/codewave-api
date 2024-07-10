@@ -1,0 +1,43 @@
+# Ignore node_modules directory
+node_modules/
+
+# Ignore log files
+*.log
+
+# Ignore compiled binaries or libraries
+*.dll
+*.exe
+*.so
+*.dylib
+
+# Ignore build output directories
+build/
+dist/
+out/
+
+# Ignore environment-specific files
+.env
+.env.local
+.env.*.local
+
+# Ignore IDE and editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+# Ignore Go binary
+*.exe
+
+# Ignore Go build output directory
+/bin/
+
+# Ignore Go module cache
+/go.sum
+/go.mod
+
+# Ignore Go test cache
+/.cache/
