@@ -10,7 +10,6 @@ func InitRoutes() *gin.Engine {
 	router := gin.Default()
 	controllers.RegisterUserRoutes(router)
 
-	// // Grupo de rutas protegidas
 	// auth := router.Group("/")
 	// auth.Use(middleware.AuthMiddleware())
 	// {
