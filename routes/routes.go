@@ -8,8 +8,6 @@ import (
 
 func InitRoutes() *gin.Engine {
 	router := gin.Default()
-
-	// Rutas públicas
 	controllers.RegisterUserRoutes(router)
 
 	// // Grupo de rutas protegidas
