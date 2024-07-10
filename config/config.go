@@ -3,10 +3,8 @@ package config
 import (
 	"codewave/models"
 	"fmt"
-	"log"
 	"os"
 
-	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/schema"
@@ -16,10 +14,10 @@ var DB *gorm.DB
 
 func InitDB() {
 	// Cargar variables del archivo .env
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatalf("Error loading .env file")
-	}
+	// err := godotenv.Load()
+	// if err != nil {
+	// 	log.Fatalf("Error loading .env file")
+	// }
 
 	// Obtener las variables de entorno
 	user := os.Getenv("DB_USER")
@@ -32,7 +30,7 @@ func InitDB() {
 	dsn := fmt.Sprintf("user=%s password=%s host=%s port=%s dbname=%s sslmode=require",
 		user, password, host, port, dbname)
 
-	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{
+	DB, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
 		NamingStrategy: schema.NamingStrategy{
 			TablePrefix: "public.",
 		},
