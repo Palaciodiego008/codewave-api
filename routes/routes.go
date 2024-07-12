@@ -9,7 +9,7 @@ import (
 func InitRoutes() *gin.Engine {
 	router := gin.Default()
 	controllers.HomeRoutes(router)
-	controllers.RegisterUserRoutes(router)
+	controllers.UserRoutes(router)
 
 	// auth := router.Group("/")
 	// auth.Use(middleware.AuthMiddleware())
