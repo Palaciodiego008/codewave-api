@@ -13,7 +13,7 @@ func UserRoutes(router *gin.Engine) {
 	authRoutes := router.Group("/auth")
 	{
 		authRoutes.POST("/register", Create)
-		authRoutes.GET("/login", Login)
+		authRoutes.POST("/login", Login)
 	}
 
 	router.GET("/users/:id", GetUser)
@@ -51,9 +51,6 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	// Print login request details
-	fmt.Println("Login request - Email:", loginReq.Email, "Password:", loginReq.Password)
-
 	token, err := services.AuthenticateUser(loginReq.Email, loginReq.Password)
 	if err != nil {
 		fmt.Println("Authentication error:", err.Error())
@@ -61,5 +58,16 @@ func Login(c *gin.Context) {
 		return
 	}
 
+	auth := http.Cookie{
+		Name:     "token",
+		Value:    token,
+		Path:     "/",
+		Domain:   "localhost",
+		MaxAge:   3600,
+		Secure:   false,
+		HttpOnly: true,
+	}
+
+	c.SetCookie(auth.Name, auth.Value, auth.MaxAge, auth.Path, auth.Domain, auth.Secure, auth.HttpOnly)
 	c.JSON(http.StatusOK, gin.H{"token": token})
 }
