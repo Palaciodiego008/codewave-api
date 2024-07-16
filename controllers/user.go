@@ -14,6 +14,7 @@ func UserRoutes(router *gin.Engine) {
 	{
 		authRoutes.POST("/register", Create)
 		authRoutes.POST("/login", Login)
+		authRoutes.POST("/logout", Logout)
 	}
 
 	router.GET("/users/:id", GetUser)
@@ -68,6 +69,23 @@ func Login(c *gin.Context) {
 		HttpOnly: true,
 	}
 
+	http.SetCookie(c.Writer, &auth)
+
 	c.SetCookie(auth.Name, auth.Value, auth.MaxAge, auth.Path, auth.Domain, auth.Secure, auth.HttpOnly)
 	c.JSON(http.StatusOK, gin.H{"token": token})
+}
+
+func Logout(c *gin.Context) {
+	auth := http.Cookie{
+		Name:     "token",
+		Value:    "",
+		Path:     "/",
+		Domain:   "localhost",
+		MaxAge:   -1,
+		Secure:   false,
+		HttpOnly: true,
+	}
+
+	http.SetCookie(c.Writer, &auth)
+	c.JSON(http.StatusOK, gin.H{"message": "Logged out successfully"})
 }

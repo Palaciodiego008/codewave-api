@@ -3,10 +3,8 @@ package config
 import (
 	"codewave/models"
 	"fmt"
-	"log"
 	"os"
 
-	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/schema"
@@ -16,17 +14,32 @@ var DB *gorm.DB
 
 func InitDB() {
 
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatalf("Error loading .env file")
-	}
+	var err error
+	// err := godotenv.Load(".env")
+	// if err != nil {
+	// 	fmt.Println("Error loading .env file")
+	// }
 
-	// Obtener las variables de entorno
 	user := os.Getenv("DB_USER")
+	if user == "" {
+		user = "postgres"
+	}
 	password := os.Getenv("DB_PASSWORD")
+	if password == "" {
+		password = "123456"
+	}
 	host := os.Getenv("DB_HOST")
+	if host == "" {
+		host = "localhost"
+	}
 	port := os.Getenv("DB_PORT")
+	if port == "" {
+		port = "5432"
+	}
 	dbname := os.Getenv("DB_NAME")
+	if dbname == "" {
+		dbname = "codewave"
+	}
 
 	dsn := fmt.Sprintf("user=%s password=%s host=%s port=%s dbname=%s",
 		user, password, host, port, dbname)
@@ -39,8 +52,6 @@ func InitDB() {
 	if err != nil {
 		panic("Failed to connect to database!")
 	}
-
-	// Migrar los modelos si las tablas no existen
 
 	modelsToMigrate := []interface{}{&models.User{}, &models.Project{}}
 	err = DB.AutoMigrate(modelsToMigrate...)
