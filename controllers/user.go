@@ -51,18 +51,7 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	auth := http.Cookie{
-		Name:     "token",
-		Value:    token,
-		Path:     "/",
-		Domain:   "localhost",
-		MaxAge:   3600,
-		Secure:   false,
-		HttpOnly: true,
-	}
-
-	http.SetCookie(c.Writer, &auth)
-	c.SetCookie(auth.Name, auth.Value, auth.MaxAge, auth.Path, auth.Domain, auth.Secure, auth.HttpOnly)
+	c.SetCookie("token", token, 3600, "/", "localhost:3000", false, true)
 	c.JSON(http.StatusOK, gin.H{"success": true, "data": gin.H{"token": token}})
 }
 
