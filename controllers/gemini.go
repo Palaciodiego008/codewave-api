@@ -13,10 +13,10 @@ func GeminiRoutes(router *gin.Engine) {
 }
 
 func ChatGeminiResponse(c *gin.Context) {
-	var openaiRequest struct {
+	var geminiRequest struct {
 		Prompt string `json:"prompt"`
 	}
-	if err := c.ShouldBindJSON(&openaiRequest); err != nil {
+	if err := c.ShouldBindJSON(&geminiRequest); err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
@@ -32,7 +32,7 @@ func ChatGeminiResponse(c *gin.Context) {
 	}
 
 	model := client.GenerativeModel("gemini-1.5-flash")
-	resp, err := model.GenerateContent(ctx, genai.Text(openaiRequest.Prompt))
+	resp, err := model.GenerateContent(ctx, genai.Text(geminiRequest.Prompt))
 
 	if err != nil {
 		c.JSON(500, gin.H{"error": err.Error()})
