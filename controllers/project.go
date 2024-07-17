@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func RegisterProjectRoutes(router *gin.RouterGroup) {
+func ProjectRoutes(router *gin.Engine) {
 	router.POST("/projects", CreateProject)
 	router.GET("/projects/:id", GetProject)
 	router.GET("/projects", ListProjects)

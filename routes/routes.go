@@ -24,15 +24,7 @@ func InitRoutes() *gin.Engine {
 
 	controllers.HomeRoutes(router)
 	controllers.UserRoutes(router)
-
-	// auth := router.Group("/")
-	// auth.Use(middleware.AuthMiddleware())
-	// {
-	// 	// Registra las rutas que requieren autenticación aquí
-	// 	controllers.RegisterProjectRoutes(auth)
-	// 	controllers.RegisterRecommendationRoutes(auth)
-	// 	controllers.RegisterAnalysisRoutes(auth)
-	// }
+	controllers.OpenAIRoutes(router)
 
 	return router
 }
