@@ -22,9 +22,10 @@ func InitRoutes() *gin.Engine {
 	// Apply the CORS middleware
 	router.Use(cors.New(config))
 
-	controllers.HomeRoutes(router)
 	controllers.UserRoutes(router)
 	controllers.OpenAIRoutes(router)
+	controllers.ProjectRoutes(router)
+	controllers.GeminiRoutes(router)
 
 	return router
 }
