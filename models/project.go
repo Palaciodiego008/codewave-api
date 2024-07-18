@@ -7,8 +7,8 @@ type Project struct {
 	Title       string    `json:"title"`
 	Description string    `json:"description"`
 	Language    string    `json:"language"`
-	Backend     string    `json:"backend"`
-	Frontend    string    `json:"frontend"`
+	Backend     bool      `json:"backend"`
+	Frontend    bool      `json:"frontend"`
 	CreatedAt   time.Time `json:"created_at"`
 	UpdatedAt   time.Time `json:"updated_at"`
 	UserID      uint      `json:"user_id"`
