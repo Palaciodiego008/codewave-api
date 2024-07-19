@@ -8,7 +8,7 @@ import (
 	"google.golang.org/api/option"
 )
 
-func GeminiRoutes(router *gin.Engine) {
+func GeminiRoutes(router *gin.RouterGroup) {
 	router.POST("/chat-gemini", ChatGeminiResponse)
 }
 

@@ -4,11 +4,12 @@ import (
 	"codewave/models"
 	"codewave/services"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
 
-func ProjectRoutes(router *gin.Engine) {
+func ProjectRoutes(router *gin.RouterGroup) {
 	router.POST("/projects", CreateProject)
 	router.GET("/projects/:id", GetProject)
 	router.GET("/projects", ListProjects)
@@ -18,13 +19,6 @@ func CreateProject(c *gin.Context) {
 	var project models.Project
 	if err := c.ShouldBindJSON(&project); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
-	// Get bearer token from header
-	token := c.GetHeader("Authorization")
-	if token == "" {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
 		return
 	}
 
@@ -47,7 +41,14 @@ func GetProject(c *gin.Context) {
 }
 
 func ListProjects(c *gin.Context) {
-	projects, err := services.ListProjects()
+	// Convert user_id to uint
+	userID, err := strconv.ParseUint(c.Query("user_id"), 10, 64)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user_id"})
+		return
+
+	}
+	projects, err := services.ListProjects(uint(userID))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

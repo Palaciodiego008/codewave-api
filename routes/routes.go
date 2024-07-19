@@ -2,6 +2,7 @@ package routes
 
 import (
 	"codewave/controllers"
+	"codewave/middleware"
 	"time"
 
 	"github.com/gin-contrib/cors"
@@ -22,10 +23,15 @@ func InitRoutes() *gin.Engine {
 	// Apply the CORS middleware
 	router.Use(cors.New(config))
 
-	controllers.UserRoutes(router)
-	controllers.OpenAIRoutes(router)
-	controllers.ProjectRoutes(router)
-	controllers.GeminiRoutes(router)
+	// Apply the auth middleware to protected routes
+	protected := router.Group("/")
+	controllers.UserRoutes(protected)
+	protected.Use(middleware.AuthRequired())
+	{
+		controllers.ProjectRoutes(protected)
+		controllers.GeminiRoutes(protected)
+		controllers.OpenAIRoutes(protected)
+	}
 
 	return router
 }

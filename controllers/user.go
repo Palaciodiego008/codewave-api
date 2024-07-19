@@ -24,15 +24,16 @@ var (
 	oauth2State = "random"
 )
 
-func UserRoutes(router *gin.Engine) {
+func UserRoutes(router *gin.RouterGroup) {
 	authRoutes := router.Group("/auth")
 	{
-		authRoutes.POST("/register", Create)
-		authRoutes.POST("/login", Login)
 		authRoutes.POST("/logout", Logout)
 		authRoutes.GET("/github", GitHubLogin)
 		authRoutes.GET("/github/callback", GitHubCallback)
 	}
+
+	authRoutes.POST("/register", Create)
+	authRoutes.POST("/login", Login)
 
 	router.GET("/users/:id", GetUser)
 }

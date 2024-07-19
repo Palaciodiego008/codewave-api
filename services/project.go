@@ -17,10 +17,11 @@ func GetProject(id string) (*models.Project, error) {
 	return &project, nil
 }
 
-func ListProjects() ([]models.Project, error) {
-	var projects []models.Project
-	if err := config.DB.Preload("User").Find(&projects).Error; err != nil {
+func ListProjects(userID uint) ([]models.Project, error) {
+	projects := []models.Project{}
+	if err := config.DB.Where("user_id = ?", userID).Preload("User").Find(&projects).Error; err != nil {
 		return nil, err
 	}
+
 	return projects, nil
 }

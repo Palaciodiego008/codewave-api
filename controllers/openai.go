@@ -9,7 +9,7 @@ import (
 	"github.com/sashabaranov/go-openai"
 )
 
-func OpenAIRoutes(router *gin.Engine) {
+func OpenAIRoutes(router *gin.RouterGroup) {
 	router.POST("/chat-gpt", ChatGPTResponse)
 }
 
