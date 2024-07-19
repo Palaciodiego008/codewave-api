@@ -21,13 +21,12 @@ func CreateProject(c *gin.Context) {
 		return
 	}
 
-	// Obtener el ID del usuario desde el token
-	userID, exists := c.Get("user_id")
-	if !exists {
+	// Get bearer token from header
+	token := c.GetHeader("Authorization")
+	if token == "" {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
 		return
 	}
-	project.UserID = userID.(uint)
 
 	err := services.CreateProject(&project)
 	if err != nil {
