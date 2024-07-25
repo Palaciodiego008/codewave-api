@@ -9,10 +9,12 @@ import (
 )
 
 func GeminiRoutes(router *gin.RouterGroup) {
-	router.POST("/chat-gemini", ChatGeminiResponse)
+	router.POST("/query-gemini", ChatGeminiResponse)
 }
 
 func ChatGeminiResponse(c *gin.Context) {
+	ctx := c.Request.Context()
+
 	var geminiRequest struct {
 		Prompt string `json:"prompt"`
 	}
@@ -20,11 +22,12 @@ func ChatGeminiResponse(c *gin.Context) {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
-	ctx := c.Request.Context()
+
 	google_api_key := os.Getenv("GOOGLE_API_KEY")
 	if google_api_key == "" {
 		google_api_key = "AIzaSyDMQ9txYz2_efafEkKVs6mEKvoi0YcTAo4"
 	}
+
 	client, err := genai.NewClient(ctx, option.WithAPIKey(google_api_key))
 	if err != nil {
 		c.JSON(500, gin.H{"error": err.Error()})

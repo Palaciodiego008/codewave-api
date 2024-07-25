@@ -13,6 +13,7 @@ func ProjectRoutes(router *gin.RouterGroup) {
 	router.POST("/projects", CreateProject)
 	router.GET("/projects/:id", GetProject)
 	router.GET("/projects", ListProjects)
+	router.PUT("/projects/:id", UpdateProject)
 }
 
 func CreateProject(c *gin.Context) {
@@ -54,4 +55,29 @@ func ListProjects(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, projects)
+}
+
+func UpdateProject(c *gin.Context) {
+	id := c.Param("id")
+
+	// Get project by id
+	project, err := services.GetProject(id)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Project not found"})
+		return
+	}
+
+	// Bind JSON to project
+	if err := c.ShouldBindJSON(&project); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	// Update project
+	if err := services.UpdateProject(project); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, project)
 }

@@ -25,3 +25,7 @@ func ListProjects(userID uint) ([]models.Project, error) {
 
 	return projects, nil
 }
+
+func UpdateProject(project *models.Project) error {
+	return config.DB.Save(project).Error
+}

@@ -10,13 +10,12 @@ import (
 )
 
 func OpenAIRoutes(router *gin.RouterGroup) {
-	router.POST("/chat-gpt", ChatGPTResponse)
+	router.POST("/query-gpt", ChatGPTResponse)
 }
 
 func ChatGPTResponse(c *gin.Context) {
 	ctx := c.Request.Context()
 	var request models.OpenAIPrompt
-
 	if err := c.ShouldBindJSON(&request); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -24,7 +23,7 @@ func ChatGPTResponse(c *gin.Context) {
 
 	openaiKey := os.Getenv("OPENAI_KEY")
 	if openaiKey == "" {
-		openaiKey = "sk-proj-171WNk8MLQW2Wy6liqzGT3BlbkFJ2P7iGNuo1HWpjP3CSr76"
+		openaiKey = "sk-proj-S8HrAIMCx4LsszHSk94eT3BlbkFJuNyHjIcFKpgvvS2C9t1p"
 	}
 
 	client := openai.NewClient(openaiKey)
