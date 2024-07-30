@@ -10,4 +10,5 @@ type User struct {
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 	Projects  []Project `json:"projects" gorm:"foreignKey:UserID"`
+	OpenAPIs  []OpenAPI `json:"openapis" gorm:"foreignKey:UserID"`
 }

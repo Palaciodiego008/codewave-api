@@ -53,7 +53,7 @@ func InitDB() {
 		panic("Failed to connect to database!")
 	}
 
-	modelsToMigrate := []interface{}{&models.User{}, &models.Project{}, &models.Recommendation{}}
+	modelsToMigrate := []interface{}{&models.User{}, &models.Project{}, &models.Recommendation{}, &models.OpenAPI{}}
 	err = DB.AutoMigrate(modelsToMigrate...)
 	if err != nil {
 		panic("Failed to migrate the schema!")
