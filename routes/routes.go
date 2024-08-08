@@ -32,6 +32,7 @@ func InitRoutes() *gin.Engine {
 		controllers.GeminiRoutes(protected)
 		controllers.OpenAIRoutes(protected)
 		controllers.AnalysisRoutes(protected)
+		controllers.OpenAPIRoutes(protected)
 	}
 
 	return router

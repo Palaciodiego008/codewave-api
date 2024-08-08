@@ -20,3 +20,13 @@ func GetOpenAPIByID(id string) (*models.OpenAPI, error) {
 
 	return &openAPI, nil
 }
+
+func ListOpenAPIs(userID uint) ([]models.OpenAPI, error) {
+	var openAPIs []models.OpenAPI
+
+	if err := config.DB.Where("user_id = ?", userID).Preload("User").Find(&openAPIs).Error; err != nil {
+		return nil, err
+	}
+
+	return openAPIs, nil
+}
