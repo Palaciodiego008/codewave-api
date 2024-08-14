@@ -52,12 +52,14 @@ func RecommendationAnalysis(c *gin.Context) {
 	}
 
 	prompt := `Please analyze the following code and provide a JSON response. 
-	The JSON should have sections including ` + selectedSections + `. 
-	Each section should contain items with a title, description (including security values or percentages), and status. 
-	The status should be 'Passed', 'Needs Improvement', or 'Failed'. Only return the JSON, no more explanation for your part.
-	
-	Code:
-	` + geminiRequest.SnapshotCode
+    The JSON should have sections including ` + selectedSections + `. 
+    Each section should contain items with a title, description (including security values or percentages), and status. 
+    The status should be 'Passed', 'Needs Improvement', or 'Failed'. 
+    Ensure that the analysis takes into account the ISO 27001 and ISO 25010:2011 standards. 
+    Only return the JSON, no more explanation for your part.
+    
+    Code:
+    ` + geminiRequest.SnapshotCode
 
 	resp, err := model.GenerateContent(ctx, genai.Text(prompt))
 	if err != nil {
