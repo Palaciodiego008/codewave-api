@@ -25,7 +25,7 @@ func ChatGeminiResponse(c *gin.Context) {
 
 	google_api_key := os.Getenv("GOOGLE_API_KEY")
 	if google_api_key == "" {
-		google_api_key = "AIzaSyDMQ9txYz2_efafEkKVs6mEKvoi0YcTAo4"
+		google_api_key = "AIzaSyDH-aSkcmdtNB3tZK1ysv4r6J3FVVd7CAQ"
 	}
 
 	client, err := genai.NewClient(ctx, option.WithAPIKey(google_api_key))
